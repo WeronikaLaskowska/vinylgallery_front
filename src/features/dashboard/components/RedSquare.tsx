@@ -1,39 +1,54 @@
 import React, { useState } from "react";
-import { Motion, spring } from "react-motion";
+import { motion } from "framer-motion";
 
-const RedSquare = () => {
+interface VinylSpinnerProps {
+  isSpinning: boolean;
+}
+
+const RedSquare = ({ isSpinning }: VinylSpinnerProps) => {
+  const [isDragging, setIsDragging] = useState(false);
+  const [prevMouseX, setPrevMouseX] = useState(0);
   const [rotation, setRotation] = useState(0);
 
-  const rotateLeft = () => {
-    setRotation(rotation - 90); // Rotate 90 degrees left
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    setPrevMouseX(e.clientX);
   };
 
-  const rotateRight = () => {
-    setRotation(rotation + 90); // Rotate 90 degrees right
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+
+    const mouseDeltaX = e.clientX - prevMouseX;
+    setRotation(rotation + mouseDeltaX);
+    setPrevMouseX(e.clientX);
+  };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
   };
 
   return (
-    <div style={{ width: "200px", height: "200px", position: "relative" }}>
-      <Motion
-        defaultStyle={{ rotation: 0 }}
-        style={{ rotation: spring(rotation) }}
-      >
-        {({ rotation }) => (
-          <div
-            style={{
-              width: "100%",
-              height: "100%",
-              position: "absolute",
-              top: "50%",
-              left: "50%",
-              transform: `translate(-50%, -50%) rotateZ(${rotation}deg)`,
-              backgroundColor: "red",
-            }}
-          />
-        )}
-      </Motion>
-      <button onClick={rotateLeft}>Rotate Left</button>
-      <button onClick={rotateRight}>Rotate Right</button>
+    <div
+      onMouseDown={handleMouseDown}
+      onMouseMove={handleMouseMove}
+      onMouseUp={handleMouseUp}
+      style={{ width: "200px", height: "200px", position: "relative" }}
+    >
+      <motion.div
+        id="vinyl"
+        drag={false}
+        style={{
+          width: "570px",
+          height: "570px",
+          position: "absolute",
+          transform: ` rotate(${rotation}deg)`,
+          backgroundColor: "red",
+          cursor: "grab",
+          animation: isSpinning
+            ? "5s linear spinThat infinite, 1s ease-out getOut 1s forwards"
+            : "1s ease-out getOut 1s forwards",
+        }}
+      ></motion.div>
     </div>
   );
 };

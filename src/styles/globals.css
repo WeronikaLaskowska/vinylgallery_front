@@ -25,3 +25,18 @@ body {
     rgba(227, 250, 247, 1) 100%
   );
 }
+
+.fancy {
+  margin: 0;
+  height: 100%;
+  font-size: 128px;
+  font-family: "Henny Penny", cursive;
+  color: #f6c3d1;
+  margin: auto;
+  letter-spacing: 0.0015em;
+  text-shadow: 0 1px #334454, -1px 0 #334454, -1px 2px #334454, -2px 1px #334454,
+    -2px 3px #334454, -3px 2px #334454, -3px 4px #334454, -4px 3px #334454,
+    -4px 5px #334454, -5px 4px #334454, -5px 6px #334454, -6px 5px #334454,
+    -6px 7px #334454, -7px 6px #334454, -7px 8px #334454, -8px 7px #334454;
+  text-align: center;
+}

@@ -12,8 +12,8 @@
   top: 0;
   left: 0;
   z-index: 1;
-  width: 100%;
-  height: 100%;
+  width: 600px;
+  height: 600px;
   background-image: url("https://www.billboard.com/wp-content/uploads/media/tyler-the-creator-igor-album-art-2019-billboard-embed.jpg?w=768");
   background-size: 100% 100%;
   box-shadow: rgba(0, 0, 0, 0.2) 0px 12px 28px 0px,
@@ -51,7 +51,8 @@
 }
 #vinyl {
   position: absolute;
-  top: 2.5%;
+  top: 8%;
+  bottom: 0;
   left: 2.5%;
   z-index: 0;
   width: 95%;
@@ -62,7 +63,6 @@
   background-position: center;
   border-radius: 50%;
   content: "";
-  animation: 5s linear spinThat infinite, 1s ease-out getOut 1s forwards;
 }
 
 @keyframes getOut {
@@ -70,14 +70,14 @@
     left: 0;
   }
   100% {
-    left: 50%;
+    left: 150%;
   }
 }
-/* @keyframes spinThat {
+@keyframes spinThat {
   0% {
     transform: rotate(0deg);
   }
   100% {
     transform: rotate(360deg);
   }
-} */
+}
