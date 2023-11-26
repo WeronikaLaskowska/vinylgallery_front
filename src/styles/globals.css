@@ -18,10 +18,10 @@
 
 body {
   color: rgb(var(--foreground-rgb));
+  background: rgb(164, 186, 183);
   background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+    0deg,
+    rgba(164, 186, 183, 1) 0%,
+    rgba(227, 250, 247, 1) 100%
+  );
 }
