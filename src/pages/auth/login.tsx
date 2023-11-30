@@ -1,5 +1,4 @@
 import { LoginScreen } from "@/features/auth/screens/LoginScreen";
-import DashboardScreen from "@/features/dashboard/screens/DashboardScreen";
 import Head from "next/head";
 
 export default function LoginPage() {
@@ -7,7 +6,7 @@ export default function LoginPage() {
     <>
       <Head>
         <title>Vinyl Gallery - Admin Panel</title>
-      </Head>{" "}
+      </Head>
       <LoginScreen />
     </>
   );

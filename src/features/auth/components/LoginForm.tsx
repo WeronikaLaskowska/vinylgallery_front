@@ -4,37 +4,36 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AppInputControlled } from "@/components/inputs/AppInputControlled";
 import { PrimaryButton } from "@/components/inputs/PrimaryButton";
+import { useLoginMutation } from "@/query/auth.queries";
+import { useAuthStore } from "@/stores/auth-store";
 
 export type LoginSchema = z.infer<ReturnType<typeof getSchema>>;
 
 export const LoginForm = () => {
   const schema = getSchema();
   const router = useRouter();
-
-  //   const setUserId = useAuthStore((state) => state.setUserId);
+  const setToken = useAuthStore((state) => state.setToken);
 
   const { control, handleSubmit } = useForm<LoginSchema>({
     mode: "onBlur",
     defaultValues: {
       email: undefined,
-      pin: undefined,
+      password: undefined,
     },
     resolver: zodResolver(schema),
   });
-  //   const mutation = useLoginMutation({
-  //     onSuccess: (data) => {
-  //       setToken(data?.data?.accessToken);
-  //       setUserId(data?.data?.userId);
-  //       router.push("/users/users-list");
-  //     },
-  //   });
+  const mutation = useLoginMutation({
+    onSuccess: (data) => {
+      setToken(data?.token);
+      router.push("/");
+    },
+  });
 
   const onSubmit: SubmitHandler<LoginSchema> = (formData) => {
-    console.log(formData, "@");
-    // mutation.mutate({
-    //   email: formData.email,
-    //   pin: formData.pin,
-    // });
+    mutation.mutate({
+      email: formData.email,
+      password: formData.password,
+    });
   };
 
   return (
@@ -60,7 +59,7 @@ export const LoginForm = () => {
         <div className="mb-5">
           <AppInputControlled
             control={control}
-            name="pin"
+            name="password"
             type="password"
             placeholder={"Password"}
             isPassword
@@ -82,7 +81,7 @@ function getSchema() {
   const schema = z.object({
     email: z.string().min(1, "Field too small"),
     // .regex(/^(?:\d{9}|[^\s@]+@[^\s@]+\.[^\s@]+)$/, "Invalid contact format"),
-    pin: z.string().min(8, "Field too small"),
+    password: z.string().min(8, "Field too small"),
   });
   return schema;
 }
