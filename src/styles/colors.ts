@@ -10,10 +10,10 @@ export const extendedColors = {
     "700": "#bea57d",
   },
   third: {
-    "500": "a4bab7",
+    "500": "#a4bab7",
   },
   fourth: {
-    "500": "2f1b25",
+    "500": "#2f1b25",
   },
   danger: {
     "50": "#fef3ee",

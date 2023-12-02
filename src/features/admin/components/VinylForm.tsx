@@ -3,18 +3,34 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AppInputControlled } from "@/components/inputs/AppInputControlled";
 import { PrimaryButton } from "@/components/inputs/PrimaryButton";
-import { useAuthStore } from "@/stores/auth-store";
 import { useFileUpload } from "@/utils/useFileUpload";
 import Image from "next/image";
-import { useAddVinylMutation } from "@/query/vinyl.queries";
+import {
+  useAddVinylMutation,
+  useEditVinylMutation,
+  useVinylByIdQuery,
+} from "@/query/vinyl.queries";
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
+import { useEffect } from "react";
 
 export type VinylSchema = z.infer<ReturnType<typeof getSchema>>;
 
 export const VinylForm = () => {
   const schema = getSchema();
   const router = useRouter();
+  const { id } = router.query;
+
+  const { data } = useVinylByIdQuery((id as string) ?? "");
+
+  useEffect(() => {
+    if (!data) {
+      reset();
+      return;
+    }
+    reset(data.info);
+  }, [data]);
+
   const { handleFileUpload, selectedImage } = useFileUpload({
     newImageSelected: (file: File) => {
       console.log(file);
@@ -24,6 +40,12 @@ export const VinylForm = () => {
   const addVinylMutation = useAddVinylMutation({
     onSuccess: () => {
       toast.success("Vinyl added succesfully");
+      router.back();
+    },
+  });
+  const editVinylMutation = useEditVinylMutation({
+    onSuccess: () => {
+      toast.success("Vinyl edited succesfully");
       router.back();
     },
   });
@@ -43,10 +65,20 @@ export const VinylForm = () => {
   });
 
   const onSubmit: SubmitHandler<VinylSchema> = (formData) => {
+    console.log(id);
+    if (id) {
+      editVinylMutation.mutateAsync({
+        image: selectedImage ? selectedImage.file : undefined,
+        id: id as string,
+        ...formData,
+      });
+      return;
+    }
     if (!selectedImage) {
       toast.error("You can not add vinyl without an image");
       return;
     }
+
     addVinylMutation.mutateAsync({
       image: selectedImage.file as File,
       ...formData,
@@ -59,7 +91,7 @@ export const VinylForm = () => {
       onSubmit={handleSubmit(onSubmit)}
     >
       <div className="mb-4 mt-2 text-center text-2xl text-6xl font-bold text-slate-700">
-        Add new Vinyl
+        {id ? "Edit vinyl" : "Add new Vinyl"}
       </div>
       <div className="mt-2 flex w-3/4 flex-col gap-3 lg:w-2/5">
         <div className="mb-5">
@@ -112,7 +144,7 @@ export const VinylForm = () => {
           />
         </div>
         {/* File input for image */}
-        {!selectedImage && (
+        {!selectedImage && !data?.info?.image && (
           <div className="mb-5">
             <div
               onClick={handleFileUpload}
@@ -142,6 +174,19 @@ export const VinylForm = () => {
               Add Cover
             </div>
           </div>
+        )}
+        {data?.info?.image && (
+          <Image
+            onClick={handleFileUpload}
+            src={`http://localhost:3000/uploads/${data?.info?.image.replace(
+              "uploads\\",
+              ""
+            )}`}
+            alt="Image vinyl"
+            width={140}
+            height={140}
+            className="h-[240px] w-[240px] m-auto cursor-pointer rounded-full border object-cover"
+          />
         )}
         {selectedImage && (
           <Image
@@ -173,8 +218,8 @@ function getSchema() {
       .min(3, "Field too small")
       .max(150, "Exceeds maximum length (150)")
       .regex(
-        /^[a-zA-Z\s]{3,150}$/,
-        "Invalid format for artist. Must be 3 to 150 characters and contain only letters and spaces."
+        /^[a-zA-Z\s,]{3,150}$/,
+        "Must be 3 to 150 characters and contain only letters."
       ),
     type: z.string().min(1, "Field too small"),
     name: z
@@ -197,7 +242,7 @@ function getSchema() {
     description: z
       .string()
       .min(1, "Field too small")
-      .max(500, "Exceeds maximum length (500)"),
+      .max(2500, "Exceeds maximum length (500)"),
     genre: z.string().min(1, "Field too small"),
   });
   return schema;
