@@ -13,6 +13,9 @@ import {
 import toast from "react-hot-toast";
 import { useRouter } from "next/router";
 import { useEffect } from "react";
+import { AppSelectControlled } from "@/components/inputs/AppSelectControlled";
+import { genresSelect, typesSelect } from "@/utils/enums";
+import { AppTextareaControlled } from "@/components/inputs/AppTextareaControlled";
 
 export type VinylSchema = z.infer<ReturnType<typeof getSchema>>;
 
@@ -28,6 +31,8 @@ export const VinylForm = () => {
       reset();
       return;
     }
+    data.info.year = data.info.year.toString();
+    data.info.score = data.info.score.toString();
     reset(data.info);
   }, [data]);
 
@@ -101,13 +106,7 @@ export const VinylForm = () => {
             placeholder="Artist"
           />
         </div>
-        <div className="mb-5">
-          <AppInputControlled
-            control={control}
-            name="type"
-            placeholder="Type"
-          />
-        </div>
+
         <div className="mb-5">
           <AppInputControlled
             control={control}
@@ -129,18 +128,29 @@ export const VinylForm = () => {
             placeholder="Score"
           />
         </div>
+
         <div className="mb-5">
-          <AppInputControlled
+          <AppTextareaControlled
             control={control}
             name="description"
             placeholder="Description"
           />
         </div>
+
         <div className="mb-5">
-          <AppInputControlled
+          <AppSelectControlled
             control={control}
             name="genre"
             placeholder="Genre"
+            data={genresSelect}
+          />
+        </div>
+        <div className="mb-5">
+          <AppSelectControlled
+            control={control}
+            name="type"
+            placeholder="Vinyl type"
+            data={typesSelect}
           />
         </div>
         {/* File input for image */}
@@ -175,7 +185,7 @@ export const VinylForm = () => {
             </div>
           </div>
         )}
-        {data?.info?.image && (
+        {data?.info?.image && !selectedImage && (
           <Image
             onClick={handleFileUpload}
             src={`http://localhost:3000/uploads/${data?.info?.image.replace(
@@ -202,7 +212,7 @@ export const VinylForm = () => {
       </div>
       <div className="w-[350px] mt-10">
         <PrimaryButton
-          title="Add Record"
+          title={id ? "Save record" : "Add record"}
           type="submit"
           // loading={mutation.isLoading}
         />

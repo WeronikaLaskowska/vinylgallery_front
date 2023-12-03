@@ -49,7 +49,7 @@ export function AppSelect({
         }}
         onBlur={onBlur}
         options={data}
-        className="basic-multi-select"
+        className="basic-multi-select "
         classNamePrefix="select"
       />
     </div>

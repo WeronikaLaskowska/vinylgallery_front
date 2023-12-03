@@ -35,6 +35,7 @@ export const VinylListScreen = () => {
       deleteVinylMutation.mutateAsync(id);
     }
   };
+  //todo add query loader and error handler
   return (
     <div className="min-h-screen relative">
       <PrimaryButton
