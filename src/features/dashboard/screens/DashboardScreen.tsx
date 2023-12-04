@@ -4,10 +4,11 @@ import VinylPreview from "../components/VinylPreview";
 import { useState } from "react";
 import { Fade } from "react-awesome-reveal";
 import { PrimaryButton } from "@/components/inputs/PrimaryButton";
+import { useRouter } from "next/router";
 
 export const DashboardScreen = () => {
   const [show, setShow] = useState(false);
-
+  const router = useRouter();
   return (
     <>
       <div className="min-h-screen">
@@ -23,12 +24,7 @@ export const DashboardScreen = () => {
           </div>
         </div>
       </div>
-      <div className="min-h-screen grid place-items-center gap-20">
-        <div className=" text-[108px] font-bold ml-auto text-slate-700 m-auto w-fit ">
-          <span style={{ opacity: 0.5 }}>OUR </span>
-          <span className="fancy">RECORDS </span>{" "}
-        </div>
-
+      <div className="min-h-[700px] gap-20 w-full relative">
         <Fade
           onVisibilityChange={(inView) => {
             if (inView) {
@@ -36,8 +32,30 @@ export const DashboardScreen = () => {
             }
           }}
         >
-          <div>
-            <VinylPreview show={show} />
+          <div className="flex justify-between items-center">
+            <div className=" text-[108px] font-bold  text-slate-700  w-fit mr-auto flex flex-col ">
+              <div className="flex ml-8">
+                <span style={{ opacity: 0.5 }}>OUR </span>
+                <span className="ml-5">RECORDS </span>{" "}
+              </div>
+              <div
+                className=" text-[24px] max-w-[850px] px-10  "
+                style={{ opacity: 0.5 }}
+              >
+                Explore our curated collection of vinyl records, where music
+                aficionados can discover a diverse range of classics, hidden
+                gems, and contemporary favorites. Dive into our selection and
+                find the perfect addition to your vinyl library.
+              </div>
+              <PrimaryButton
+                onClick={() => router.push("/vinyls")}
+                title="See all"
+                className="mt-10 max-w-[350px] m-auto"
+              />
+            </div>
+            <div className=" ml-auto">
+              <VinylPreview show={show} />
+            </div>
           </div>
         </Fade>
       </div>

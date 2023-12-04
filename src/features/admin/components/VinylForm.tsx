@@ -252,7 +252,7 @@ function getSchema() {
     description: z
       .string()
       .min(1, "Field too small")
-      .max(2500, "Exceeds maximum length (500)"),
+      .max(2500, "Exceeds maximum length (2500)"),
     genre: z.string().min(1, "Field too small"),
   });
   return schema;
