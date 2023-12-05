@@ -7,7 +7,7 @@ const VinylCard = ({
   handleVinylEdit,
 }: {
   vinyl: Vinyl;
-  onClick: () => void;
+  onClick?: () => void;
   handleVinylDelete?: (v: string) => void;
   handleVinylEdit?: (v: string) => void;
 }) => {
@@ -22,7 +22,10 @@ const VinylCard = ({
           style={{ borderRadius: 15 }}
         >
           <Image
-            src={`http://localhost:3000/uploads/${vinyl.image}`}
+            src={`http://localhost:3000/uploads/${vinyl.image.replace(
+              "uploads\\",
+              ""
+            )}`}
             alt="Image vinyl"
             fill
             style={{ objectFit: "cover", borderRadius: 15 }}
@@ -36,8 +39,8 @@ const VinylCard = ({
             <span className="text-slate-400 pt-2 font-semibold">
               {vinyl.artist}
             </span>
-            <div className=" h-18 sm:h-28">
-              <span className="line-clamp-4 py-2 text-base font-light leading-relaxed">
+            <div className=" h-18 sm:h-24">
+              <span className="line-clamp-3 py-2 text-base font-light leading-relaxed">
                 {vinyl.description}
               </span>
             </div>
@@ -71,7 +74,7 @@ const VinylCard = ({
                   </svg>
                 </span>
               </div>
-              <div className="flex flex-col items-end">
+              <div className="hidden  sm:flex flex-col items-end">
                 <div className="h-7" />
                 <span className="text-3xl  font-bold  gap-x-2 text-slate-300">
                   ({vinyl.year})
