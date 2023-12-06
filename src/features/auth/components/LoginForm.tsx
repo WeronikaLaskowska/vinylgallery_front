@@ -25,7 +25,7 @@ export const LoginForm = () => {
   const mutation = useLoginMutation({
     onSuccess: (data) => {
       setToken(data?.token);
-      router.push("/");
+      router.push("/admin/vinyl/list");
     },
   });
 

@@ -45,13 +45,13 @@ export const VinylForm = () => {
   const addVinylMutation = useAddVinylMutation({
     onSuccess: () => {
       toast.success("Vinyl added succesfully");
-      router.back();
+      router.push("/admin/vinyl/list");
     },
   });
   const editVinylMutation = useEditVinylMutation({
     onSuccess: () => {
       toast.success("Vinyl edited succesfully");
-      router.back();
+      router.push("/admin/vinyl/list");
     },
   });
 
@@ -73,6 +73,7 @@ export const VinylForm = () => {
     console.log(id);
     if (id) {
       editVinylMutation.mutateAsync({
+        //@ts-ignore
         image: selectedImage ? selectedImage.file : undefined,
         id: id as string,
         ...formData,
@@ -172,7 +173,7 @@ export const VinylForm = () => {
                 viewBox="0 0 24 24"
                 fill="none"
                 stroke="currentColor"
-                stroke-width="2"
+                strokeWidth="2"
                 stroke-linecap="round"
                 stroke-linejoin="round"
                 className="feather feather-plus-square"
@@ -188,10 +189,9 @@ export const VinylForm = () => {
         {data?.info?.image && !selectedImage && (
           <Image
             onClick={handleFileUpload}
-            src={`http://localhost:3000/uploads/${data?.info?.image.replace(
-              "uploads\\",
-              ""
-            )}`}
+            src={`http://localhost:3000/uploads/${data?.info?.image
+              .replace("uploads\\", "")
+              .replace("uploads", "")}`}
             alt="Image vinyl"
             width={140}
             height={140}
@@ -214,7 +214,6 @@ export const VinylForm = () => {
         <PrimaryButton
           title={id ? "Save record" : "Add record"}
           type="submit"
-          // loading={mutation.isLoading}
         />
       </div>
     </form>

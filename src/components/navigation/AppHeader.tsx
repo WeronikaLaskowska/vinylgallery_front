@@ -30,13 +30,13 @@ export const AppHeader = () => {
         >
           Vinyls
         </div>
-        <div
+        {/* <div
           className={`cursor-pointer font-bold ${
             router.pathname.includes("blog") ? "text-primary-500 underline" : ""
           }`}
         >
           Blog
-        </div>
+        </div> */}
       </nav>
       <div onClick={handleLogout} className="cursor-pointer mr-10">
         Logout

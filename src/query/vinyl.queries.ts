@@ -49,7 +49,7 @@ export function useDeleteVinylMutation(options: { onSuccess: () => void }) {
 
 export function useAllVinylInfiniteQuery(params: GetVinylsReq) {
   const query = useQuery({
-    queryKey: ["vinyls", params.page],
+    queryKey: ["vinyls", params.page, params.genre],
     queryFn: () => {
       return VinylApi.getVinylList({ ...params });
     },

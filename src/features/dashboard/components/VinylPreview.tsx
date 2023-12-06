@@ -3,9 +3,13 @@ import VinylCard from "@/features/vinyl/components/VinylCard";
 import { useEffect, useState } from "react";
 import { Vinyl } from "@/models/vinyl";
 import { SlideFromRight } from "@/components/animations/SlideFromRight";
+import { Spinner } from "@/components/ui/Spinner";
 
 const VinylPreview = ({ show }: { show: boolean }) => {
-  const { data, isLoading } = useAllVinylInfiniteQuery({ page: 1, limit: 4 });
+  const { data, isLoading, isError } = useAllVinylInfiniteQuery({
+    page: 1,
+    limit: 4,
+  });
   const [cards, setCards] = useState<
     { right: number; top: number; delay: number; vinyl: Vinyl }[]
   >([]);
@@ -42,7 +46,18 @@ const VinylPreview = ({ show }: { show: boolean }) => {
   }, [data]);
 
   if (isLoading) {
-    return <>Loading...</>;
+    return (
+      <div className="grid place-items-center mt-[30vh]">
+        <Spinner />
+      </div>
+    );
+  }
+  if (isError) {
+    return (
+      <div className="grid place-items-center mt-[30vh]">
+        We are having some network issues. Please try again.
+      </div>
+    );
   }
   return (
     <>

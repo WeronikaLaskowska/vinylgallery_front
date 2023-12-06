@@ -28,7 +28,7 @@ export function AuthProvider({ children, role }: AuthProviderProps) {
 
       //logged in user trying to go to login pages
       if (token && role === "AUTH") {
-        return router.push("/admin/list");
+        return router.push("/admin/vinyl/list");
       }
     }
     checkAuth();

@@ -8,6 +8,7 @@ export const VinylDetailsScreen = () => {
   const { id } = router.query;
 
   const { data } = useVinylByIdQuery((id as string) ?? "");
+
   if (!data) {
     return <Spinner />;
   }
@@ -22,7 +23,7 @@ export const VinylDetailsScreen = () => {
             {data?.info?.image && (
               <Image
                 src={`http://localhost:3000/uploads/${data?.info?.image.replace(
-                  "uploads\\",
+                  "uploads",
                   ""
                 )}`}
                 alt="Image vinyl"
@@ -32,14 +33,14 @@ export const VinylDetailsScreen = () => {
               />
             )}
             <div
-              style={{ borderTopLeftRadius: 20, borderBottomRightRadius:20 }}
+              style={{ borderTopLeftRadius: 20, borderBottomRightRadius: 20 }}
               className="w-[100px] h-[100px] absolute top-0 right-0 bg-white text-[48px] shadow-md grid place-items-center border text-third-500 "
             >
               {data.info.score}
             </div>
           </div>
           <div className="p-10 flex flex-col max-h-[50vh] xl:max-h-[90vh] justify-end mt-auto">
-            <div className="text-[48px] text-slate-700 font-bold">
+            <div className="text-[48px] text-slate-700 font-bold max-w-[500px]">
               {data.info.name}{" "}
               <span className="opacity-50 ml-2">({data.info.year})</span>{" "}
             </div>
@@ -52,7 +53,7 @@ export const VinylDetailsScreen = () => {
               </div>
             </div>
             <div
-              className="xl:max-w-[600px] max-h-[800px] mt-10 text-[18px]"
+              className="xl:max-w-[600px] max-h-[800px] xl:max-h-[35vh] mt-10 text-[18px]"
               style={{ overflow: "auto" }}
             >
               {data.info.description}
