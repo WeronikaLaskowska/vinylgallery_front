@@ -15,7 +15,7 @@ const VinylCard = ({
     <>
       <section
         onClick={onClick}
-        className="product cursor-pointer  relative gap-4 mx-auto p-10  bg-white rounded-md shadow-lg m-4 w-[350px] sm:w-[400px] h-[300px]"
+        className="vinyl-card product cursor-pointer  relative gap-4 mx-auto p-10  bg-white rounded-md shadow-lg m-4 w-[350px] sm:w-[400px] h-[300px]"
       >
         <div
           className="absolute left-5 sm:-left-[80px] w-[150px] sm:w-[200px] max-h-[250px] top-0 bottom-0 m-auto rounded-tl-md rounded-tr-md shadow-md"

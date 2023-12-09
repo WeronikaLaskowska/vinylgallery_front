@@ -5,19 +5,19 @@ interface VinylSpinnerProps {
   isSpinning: boolean;
 }
 
-const RedSquare = ({ isSpinning }: VinylSpinnerProps) => {
+const VinylSpinningObject = ({ isSpinning }: VinylSpinnerProps) => {
   const [isDragging, setIsDragging] = useState(false);
   const [prevMouseX, setPrevMouseX] = useState(0);
   const [rotation, setRotation] = useState(0);
 
-  const handleMouseDown = (e) => {
+  const handleMouseDown = (e: { clientX: React.SetStateAction<number> }) => {
     setIsDragging(true);
     setPrevMouseX(e.clientX);
   };
 
-  const handleMouseMove = (e) => {
+  const handleMouseMove = (e: { clientX: React.SetStateAction<number> }) => {
     if (!isDragging) return;
-
+    //@ts-ignore
     const mouseDeltaX = e.clientX - prevMouseX;
     setRotation(rotation + mouseDeltaX);
     setPrevMouseX(e.clientX);
@@ -53,4 +53,4 @@ const RedSquare = ({ isSpinning }: VinylSpinnerProps) => {
   );
 };
 
-export default RedSquare;
+export default VinylSpinningObject;

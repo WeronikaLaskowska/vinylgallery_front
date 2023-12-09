@@ -6,11 +6,13 @@ import { Spinner } from "@/components/ui/Spinner";
 export const VinylDetailsScreen = () => {
   const router = useRouter();
   const { id } = router.query;
+  const { data, isLoading } = useVinylByIdQuery((id as string) ?? "");
 
-  const { data } = useVinylByIdQuery((id as string) ?? "");
-
-  if (!data) {
+  if (isLoading) {
     return <Spinner />;
+  }
+  if (!data) {
+    return <>No data found.</>;
   }
   return (
     <div className="min-h-screen flex justify-center items-center">

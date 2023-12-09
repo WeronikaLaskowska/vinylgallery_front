@@ -1,11 +1,12 @@
 import React, { useRef, useState, MouseEvent } from "react";
-import RedSquare from "./RedSquare";
+import VinylSpinningObject from "./VinylSpinningObject";
 import { PrimaryButton } from "@/components/inputs/PrimaryButton";
 
 const VinylSpin = () => {
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
   const audioUrl = "/song.mp3";
+
   const togglePlay = () => {
     setIsPlaying((prevIsPlaying) => {
       const audio = audioRef.current;
@@ -35,7 +36,7 @@ const VinylSpin = () => {
             className="max-w-[100px]"
           />
         </div>
-        <RedSquare isSpinning={isPlaying} />
+        <VinylSpinningObject isSpinning={isPlaying} />
       </div>
     </div>
   );

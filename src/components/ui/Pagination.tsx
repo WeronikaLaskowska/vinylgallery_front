@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 interface PaginationParams {
   page: number;
   setPage: (v: number) => void;
@@ -23,11 +23,6 @@ const Pagination = ({ page, setPage, totalPages }: PaginationParams) => {
     setCurrentPage(page);
     setPage(page);
   };
-
-  useEffect(() => {
-    // You can fetch data based on the currentPage state here
-    // Example: fetchData(currentPage);
-  }, [currentPage]);
 
   const renderPageNumbers = () => {
     const pageNumbers = [];

@@ -25,7 +25,6 @@ export const VinylListForUserScreen = () => {
       </div>
     );
   }
-  //todo add query loader and error handler
   return (
     <div className="min-h-screen relative mt-10">
       <div className="mx-auto w-full lg:w-fit lg:ml-auto w-fit mr-20 mt-[100px]  lg:mt-0">
@@ -62,7 +61,6 @@ export const VinylListForUserScreen = () => {
         <Pagination
           page={page}
           setPage={(page) => {
-            console.log("page change", page);
             setPage(page);
           }}
           totalPages={Math.ceil(data?.totalItems / 6)}

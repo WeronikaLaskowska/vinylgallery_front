@@ -54,7 +54,7 @@ export const VinylListScreen = () => {
       <PrimaryButton
         onClick={() => router.push("/admin/vinyl/add")}
         title="+ ADD NEW RECORD"
-        className="max-w-[350px] m-auto mt-10 mb-10 grid place-items-center"
+        className="max-w-[350px] m-auto mt-20 sm:mt-10 mb-10 grid place-items-center"
       />
       {isLoading && (
         <div className="grid place-items-center mt-[30vh]">
@@ -79,7 +79,7 @@ export const VinylListScreen = () => {
       )}
 
       <div
-        className=" bg-white max-w-fit absolute top-[0px] left-[30px] px-5 py-2  shadow-md"
+        className=" bg-white max-w-fit absolute -top-[70px] sm:top-[0px] left-[30px] px-5 py-2  shadow-md"
         style={{ borderRadius: 15 }}
       >
         <Pagination

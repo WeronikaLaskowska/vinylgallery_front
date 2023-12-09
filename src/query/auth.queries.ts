@@ -9,11 +9,9 @@ export function useLoginMutation(options: {
   const mutation = useMutation({
     mutationFn: AuthApi.login,
     onSuccess(res) {
-      console.log(res);
       options.onSuccess(res);
     },
     onError(e) {
-      console.log(e);
       toast.error(parseError(e).message);
     },
   });

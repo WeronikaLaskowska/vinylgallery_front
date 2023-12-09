@@ -22,8 +22,8 @@ export type VinylSchema = z.infer<ReturnType<typeof getSchema>>;
 export const VinylForm = () => {
   const schema = getSchema();
   const router = useRouter();
-  const { id } = router.query;
 
+  const { id } = router.query;
   const { data } = useVinylByIdQuery((id as string) ?? "");
 
   useEffect(() => {
@@ -70,7 +70,6 @@ export const VinylForm = () => {
   });
 
   const onSubmit: SubmitHandler<VinylSchema> = (formData) => {
-    console.log(id);
     if (id) {
       editVinylMutation.mutateAsync({
         //@ts-ignore
